@@ -3,26 +3,26 @@ package com.kata.tondeuse.domain;
 public enum Direction implements Movable{
     N("N", "W", "E"){
         @Override
-        public void move(Position position) {
-            position.moveNorth();
+        public void move(Position position, Field field) {
+            position.moveNorth(field);
         }
     },
     E("E", "N", "S") {
         @Override
-        public void move(Position position) {
-            position.moveEast();
+        public void move(Position position, Field field) {
+            position.moveEast(field);
         }
     },
     S("S", "E", "W") {
         @Override
-        public void move(Position position) {
-            position.moveSouth();
+        public void move(Position position, Field field) {
+            position.moveSouth(field);
         }
     },
     W("W", "S", "N") {
         @Override
-        public void move(Position position) {
-            position.moveWest();
+        public void move(Position position , Field field) {
+            position.moveWest(field);
         }
     };
 

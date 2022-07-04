@@ -12,20 +12,20 @@ public class Position {
     private int y;
 
 
-    public void moveNorth() {
-        y++;
+    public void moveNorth(Field field) {
+        if (field.canMoveOnYAxis(y + 1)) y++;
     }
 
-    public void moveSouth() {
-        y--;
+    public void moveSouth(Field field) {
+        if (field.canMoveOnYAxis(y - 1)) y--;
     }
 
-    public void moveWest() {
-        x--;
+    public void moveWest(Field field) {
+        if (field.canMoveOnXAxis(x - 1)) x--;
     }
 
-    public void moveEast() {
-        x++;
+    public void moveEast(Field field) {
+        if (field.canMoveOnXAxis(x + 1)) x++;
     }
 
     @Override

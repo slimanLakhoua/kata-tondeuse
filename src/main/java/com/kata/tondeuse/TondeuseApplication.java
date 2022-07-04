@@ -8,8 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import java.io.File;
-
 @SpringBootApplication
 public class TondeuseApplication {
 
@@ -22,6 +20,6 @@ public class TondeuseApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 
-		return args -> mowItNowService.fetchMowersFromFile();
+		return args -> mowItNowService.proceed();
 	}
 }

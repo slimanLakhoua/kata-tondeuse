@@ -36,7 +36,7 @@ public class Mower {
     }
 
     private void moveMower()  {
-       this.direction.move(this.position);
+       this.direction.move(this.position, this.field);
     }
 
     private void changeDirection(String instruction) {

@@ -14,17 +14,17 @@ public class Field {
 
     public Field(String coordinatesAsString) {
         if (coordinatesAsString.length() != 3) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("invalid coordinates");
         }
 
         lastX = Integer.parseInt(coordinatesAsString.substring(0,1));
         lastY = Integer.parseInt(coordinatesAsString.substring(coordinatesAsString.lastIndexOf(SEPARATOR) + 1));
     }
 
-    public boolean canMove(Integer x, Integer y) {
-        if (x < 0 || y < 0) {
-            throw new IllegalArgumentException("coordinates can not be negative");
-        }
-        return x <= lastX && y <= lastY;
+    public boolean canMoveOnXAxis(Integer x) {
+        return x >= 0 && x <= lastX;
+    }
+    public boolean canMoveOnYAxis( Integer y) {
+        return y >= 0 && y <= lastY;
     }
 }
