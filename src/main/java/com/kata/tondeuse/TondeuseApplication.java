@@ -1,6 +1,7 @@
 package com.kata.tondeuse;
 
 import com.kata.tondeuse.service.MowItNowService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,17 +10,25 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
+@Slf4j
 public class TondeuseApplication {
 
-	@Autowired
-	private MowItNowService mowItNowService;
-	public static void main(String[] args) {
-		SpringApplication.run(TondeuseApplication.class, args);
-	}
+    private final MowItNowService mowItNowService;
 
-	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+    @Autowired
+    public TondeuseApplication(MowItNowService mowItNowService) {
+        this.mowItNowService = mowItNowService;
+    }
 
-		return args -> mowItNowService.proceed();
-	}
+    @Bean
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        return args -> {
+            var results = mowItNowService.processFile("exercice.txt");
+            results.forEach(log::info);
+        };
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(TondeuseApplication.class, args);
+    }
 }

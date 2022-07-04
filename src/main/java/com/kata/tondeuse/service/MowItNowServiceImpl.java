@@ -11,39 +11,30 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.kata.tondeuse.utils.Constants.SEPARATOR;
+import static java.util.stream.Collectors.toList;
 
 
 @Service
 @Slf4j
-public class MowItNowServiceImpl implements MowItNowService{
+public class MowItNowServiceImpl implements MowItNowService {
 
-    private final FileUtils fileUtils;
-
-    public MowItNowServiceImpl(FileUtils fileUtils) {
-        this.fileUtils = fileUtils;
-    }
-
-    public void proceed() {
-        this.fetchMowersFromFile().stream().map(Mower::run).forEach(log::info);
-    }
-    private List<Mower> fetchMowersFromFile()  {
-        List<Mower> mowers ;
-
+    public List<String> processFile(String fileName) {
         try {
-            List<String> lines = this.fileUtils.readLinesFromFile("exercice");
-            log.info("reading lines from file. {} line found", lines.size());
-            mowers = this.createMowersFromLines(lines);
-            log.info("{} Mowers found", mowers.size());
-            log.info("Running Mowers ...");
+            var lines = FileUtils.readLinesFromFile(fileName);
+            log.debug("reading lines from file. {} line found", lines.size());
+            var mowers = this.createMowersFromLines(lines);
+            log.debug("{} Mowers found", mowers.size());
+            log.debug("Running Mowers ...");
+            return this.proceed(mowers);
 
         } catch (IOException | URISyntaxException e) {
             throw new FileConverterException("error converting file to list of Mower");
         }
-
-        return mowers;
     }
 
     private List<Mower> createMowersFromLines(List<String> lines) {
@@ -51,14 +42,18 @@ public class MowItNowServiceImpl implements MowItNowService{
 
         Field field = new Field(lines.get(0));
 
-        for(int i =1; i<lines.size(); i = i+2) {
+        for (int i = 1; i < lines.size(); i = i + 2) {
             String[] coordinatesAsStringArray = lines.get(i).split(SEPARATOR);
-            Position position = new Position(Integer.parseInt(coordinatesAsStringArray[0]),Integer.parseInt(coordinatesAsStringArray[1]));
-            String instructions = lines.get(i+1);
-            Mower mower = new Mower(field,Direction.fromValue(coordinatesAsStringArray[2]),position,instructions);
+            log.info(Arrays.toString(coordinatesAsStringArray));
+            Position position = new Position(Integer.parseInt(coordinatesAsStringArray[0]), Integer.parseInt(coordinatesAsStringArray[1]));
+            String instructions = lines.get(i + 1);
+            Mower mower = new Mower(field, Direction.fromValue(coordinatesAsStringArray[2]), position, instructions);
             mowers.add(mower);
         }
         return mowers;
     }
 
+    private List<String> proceed(List<Mower> mowers) {
+        return mowers.stream().map(Mower::run).collect(toList());
+    }
 }

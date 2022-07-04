@@ -1,27 +1,26 @@
 package com.kata.tondeuse.utils;
 
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-@Service
-public class FileUtils {
+import static java.util.stream.Collectors.toList;
 
-    public List<String> readLinesFromFile(String fileName) throws URISyntaxException, IOException {
+public final class FileUtils {
 
-        Path path = Paths.get(Objects.requireNonNull(getClass().getClassLoader()
-                .getResource(fileName + ".txt")).toURI());
+    private FileUtils() {
+    }
 
-        try (Stream<String> stream = Files.lines(path)) {
-            return stream.collect(Collectors.toList());
+    public static List<String> readLinesFromFile(String fileName) throws URISyntaxException, IOException {
+
+        var path = Paths.get(Objects.requireNonNull(FileUtils.class.getClassLoader()
+                .getResource(fileName)).toURI());
+
+        try (var stream = Files.lines(path)) {
+            return stream.collect(toList());
         }
     }
 }

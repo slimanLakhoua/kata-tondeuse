@@ -1,12 +1,12 @@
 package com.kata.tondeuse.domain;
 
-import static com.kata.tondeuse.utils.Constants.MOVE_FORWARD;
-import static com.kata.tondeuse.utils.Constants.RIGHT;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
+
+import static com.kata.tondeuse.utils.Constants.MOVE_FORWARD;
+import static com.kata.tondeuse.utils.Constants.RIGHT;
 
 
 @AllArgsConstructor
@@ -35,8 +35,8 @@ public class Mower {
         return this.toString();
     }
 
-    private void moveMower()  {
-       this.direction.move(this.position, this.field);
+    private void moveMower() {
+        this.direction.move(this.position, this.field);
     }
 
     private void changeDirection(String instruction) {

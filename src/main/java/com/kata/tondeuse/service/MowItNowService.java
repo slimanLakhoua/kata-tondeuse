@@ -1,6 +1,7 @@
 package com.kata.tondeuse.service;
 
-public interface MowItNowService {
+import java.util.List;
 
-    void proceed();
+public interface MowItNowService {
+    List<String> processFile(String fileName);
 }

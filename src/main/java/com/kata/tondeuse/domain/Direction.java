@@ -1,7 +1,7 @@
 package com.kata.tondeuse.domain;
 
-public enum Direction implements Movable{
-    N("N", "W", "E"){
+public enum Direction implements Movable {
+    N("N", "W", "E") {
         @Override
         public void move(Position position, Field field) {
             position.moveNorth(field);
@@ -21,7 +21,7 @@ public enum Direction implements Movable{
     },
     W("W", "S", "N") {
         @Override
-        public void move(Position position , Field field) {
+        public void move(Position position, Field field) {
             position.moveWest(field);
         }
     };

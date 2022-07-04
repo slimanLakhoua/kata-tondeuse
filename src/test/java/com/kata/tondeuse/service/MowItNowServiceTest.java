@@ -1,36 +1,23 @@
 package com.kata.tondeuse.service;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.File;
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
 class MowItNowServiceTest {
 
-    @Autowired
-    private MowItNowService mowItNowService;
+    private final MowItNowService mowItNowService = new MowItNowServiceImpl();
 
 
     @Test
-    void should_Read_File() {
+    void processFile_should_return_valid_output() {
 
-        try {
-            // given
-            String fileName = "exercice";
-            // when
-            File file = mowItNowService.readFile(fileName);
-            // then
-            assertNotNull(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        var results = mowItNowService.processFile("exercice.txt");
+        assertAll(() -> {
+            assertEquals("1 3 N", results.get(0));
+            assertEquals("5 1 E", results.get(1));
+        });
     }
 
 }
