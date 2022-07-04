@@ -1,21 +1,39 @@
 package com.kata.tondeuse.domain;
 
-public enum Direction {
-    N('N', 'W', 'E',"moveNorth"),
-    E('E', 'N', 'S',"moveEast"),
-    S('S', 'E', 'W',"moveSouth"),
-    W('W', 'S', 'N',"moveWest");
+public enum Direction implements Movable{
+    N("N", "W", "E"){
+        @Override
+        public void move(Position position) {
+            position.moveNorth();
+        }
+    },
+    E("E", "N", "S") {
+        @Override
+        public void move(Position position) {
+            position.moveEast();
+        }
+    },
+    S("S", "E", "W") {
+        @Override
+        public void move(Position position) {
+            position.moveSouth();
+        }
+    },
+    W("W", "S", "N") {
+        @Override
+        public void move(Position position) {
+            position.moveWest();
+        }
+    };
 
-    private final char value;
-    private final char left;
-    private final char right;
-    private final String methodName;
+    private final String value;
+    private final String left;
+    private final String right;
 
-    Direction(char value, char left, char right, String methodName) {
+    Direction(String value, String left, String right) {
         this.value = value;
         this.left = left;
         this.right = right;
-        this.methodName = methodName;
     }
 
     public Direction getLeft() {
@@ -26,16 +44,17 @@ public enum Direction {
         return fromValue(this.right);
     }
 
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public static Direction fromValue(char value) {
+    public static Direction fromValue(String value) {
         for (Direction d : values()) {
-            if (d.value == value) {
+            if (d.value.equals(value)) {
                 return d;
             }
         }
         throw new IllegalArgumentException("invalid enum value");
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

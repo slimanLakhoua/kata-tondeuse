@@ -18,7 +18,7 @@ public class Field {
         }
 
         lastX = Integer.parseInt(coordinatesAsString.substring(0,1));
-        lastY = Integer.parseInt(coordinatesAsString.substring(coordinatesAsString.lastIndexOf(SEPARATOR)));
+        lastY = Integer.parseInt(coordinatesAsString.substring(coordinatesAsString.lastIndexOf(SEPARATOR) + 1));
     }
 
     public boolean canMove(Integer x, Integer y) {

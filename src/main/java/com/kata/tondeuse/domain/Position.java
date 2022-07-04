@@ -11,22 +11,26 @@ public class Position {
     private int x;
     private int y;
 
-    private Direction direction;
 
-    public void moveNorth(Field field) {
-        if (field.canMove(x, y--)) y--;
+    public void moveNorth() {
+        y++;
     }
 
-    public void moveSouth(Field field) {
-        if (field.canMove(x, y++)) y++;
+    public void moveSouth() {
+        y--;
     }
 
-    public void moveWest(Field field) {
-        if (field.canMove(x--, y)) x--;
+    public void moveWest() {
+        x--;
     }
 
-    public void moveEast(Field field) {
-        if (field.canMove(x++, y)) x++;
+    public void moveEast() {
+        x++;
     }
 
+    @Override
+    public String toString() {
+        return
+                x + " " + y;
+    }
 }

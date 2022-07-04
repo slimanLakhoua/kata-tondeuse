@@ -19,12 +19,9 @@ public class TondeuseApplication {
 		SpringApplication.run(TondeuseApplication.class, args);
 	}
 
-//	@Bean
-//	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-//
-//		return args -> {
-//			File file = mowItNowService.readFile("exercice");
-//
-//		};
-//	}
+	@Bean
+	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+
+		return args -> mowItNowService.fetchMowersFromFile();
+	}
 }

@@ -8,9 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 
 @AllArgsConstructor
 @Getter
@@ -18,43 +15,40 @@ import java.lang.reflect.Method;
 public class Mower {
 
     private Field field;
-
+    private Direction direction;
     private Position position;
-
     private String instructions;
 
-    public void runMower() {
+    public String run() {
         if (!StringUtils.hasText(instructions)) {
             throw new IllegalArgumentException("instructions can not be empty");
         }
 
-        instructions.chars().forEach(instruction -> {
-            if (MOVE_FORWARD == instruction) {
-                this.move();
+        instructions.chars().mapToObj(Character::toString).forEach(instruction -> {
+            if (MOVE_FORWARD.equals(instruction)) {
+                this.moveMower();
             } else {
                 this.changeDirection(instruction);
             }
         });
+
+        return this.toString();
     }
 
-    private void move()  {
-        try {
-        Class<?> c = Class.forName(Position.class.getName());
-
-            Method method = c.getDeclaredMethod(this.position.getDirection().getMethodName());
-            method.invoke(this.position);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    private void moveMower()  {
+       this.direction.move(this.position);
     }
 
-    private void changeDirection(char instruction) {
-        if (instruction == RIGHT) {
-            this.position.setDirection(this.position.getDirection().getRight());
+    private void changeDirection(String instruction) {
+        if (RIGHT.equals(instruction)) {
+            this.direction = this.direction.getRight();
         } else {
-            this.position.setDirection(this.position.getDirection().getLeft());
+            this.direction = this.direction.getLeft();
         }
     }
 
-
+    @Override
+    public String toString() {
+        return position + " " + direction;
+    }
 }
